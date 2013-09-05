@@ -8,6 +8,7 @@ module Pigeon
         @config   = config
       end
 
+      def run;          end
       def notify(args); end
     end
   end

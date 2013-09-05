@@ -1,20 +1,16 @@
 ---
-api_key: "zRb[=O)a%O)9W._*]>*/>iBh9pAKg'$"
+api_key: YOUR API KEY
 host:    0.0.0.0
 port:    9699
 plugins:
-  IRC:
-    server:             irc.example.com
-    port:               6667
-    password:           password
-    enable_ssl:         on
-    nick:               pigeon
-    user:               pigeon
-    interval:           5
-    reconnect_interval: 5
-    no_post_with_join:  on
   Ikachan:
-    scheme:             http
-    host:               irc.example.com
-    port:               4979
-    channel:            pigeon
+    scheme:  http
+    host:    irc.example.com
+    port:    4979
+    channel: pigeon
+  Mail:
+    from:    pigeon@example.com
+    to:
+      - foo@example.com
+      - bar@example.com
+    subject: [notification] XXX
