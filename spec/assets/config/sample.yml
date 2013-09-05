@@ -14,6 +14,7 @@ plugins:
     reconnect_interval: 5
     no_post_with_join:  on
   Ikachan:
+    scheme:             http
     host:               irc.example.com
     port:               4979
     channel:            pigeon

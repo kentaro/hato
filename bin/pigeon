@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'pigeon'
+
+opts = {}
+
+parser = OptionParser.new
+parser.on('-c=VAL', '--config=VAL') { |v| opts[:config_file] = v }
+parser.parse!(ARGV)
+
+Pigeon.run(opts)
