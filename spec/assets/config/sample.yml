@@ -1,0 +1,19 @@
+---
+api_key: "zRb[=O)a%O)9W._*]>*/>iBh9pAKg'$"
+host:    0.0.0.0
+port:    9699
+plugins:
+  IRC:
+    server:             irc.example.com
+    port:               6667
+    password:           password
+    enable_ssl:         on
+    nick:               pigeon
+    user:               pigeon
+    interval:           5
+    reconnect_interval: 5
+    no_post_with_join:  on
+  Ikachan:
+    host:               irc.example.com
+    port:               4979
+    channel:            pigeon
