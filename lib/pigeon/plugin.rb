@@ -12,10 +12,3 @@ module Pigeon
     end
   end
 end
-
-
-
-
-
-
-

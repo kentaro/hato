@@ -6,9 +6,9 @@ module Pigeon
     end
 
     def update(args)
-      @components.each do |component|
-        component.notify(args)
-      end
+      @components.map { |component|
+        Thread.start(component) { component.notify(args) }
+      }.each(&:join)
     end
   end
 end
