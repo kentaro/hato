@@ -1,0 +1,56 @@
+require_relative '../../spec_helper'
+
+describe Pigeon::Config do
+  before { described_class.reset }
+
+  describe '.load' do
+    context 'success' do
+      context 'when a config file is passed in' do
+        before {
+          described_class.load(
+            File.expand_path('../../../assets/config/test.rb', __FILE__)
+          )
+        }
+
+        it { expect(described_class.loaded?).to be_true }
+      end
+    end
+
+    context 'failure' do
+      context 'when a config file does not exist' do
+        it {
+          expect {
+            described_class.load('no such file')
+          }.to raise_error LoadError
+        }
+      end
+    end
+  end
+
+  describe '.define' do
+    context 'success' do
+      context 'when a config file is passed in' do
+        before {
+          described_class.load(
+            File.expand_path('../../../assets/config/test.rb', __FILE__)
+          )
+        }
+
+        it {
+          expect(described_class.api_key).to be == 'YOUR API KEY'
+
+          expect(described_class.tags).to be_an_instance_of Array
+          expect(described_class.tags.size).to be == 1
+
+          tag = described_class.tags.first
+          expect(tag.plugins).to be_an_instance_of Array
+          expect(tag.plugins.size).to be == 2
+
+          plugin = tag.plugins.first
+          expect(plugin.name).to be == 'Ikachan'
+          expect(plugin.host).to be == 'irc.example.com'
+        }
+      end
+    end
+  end
+end

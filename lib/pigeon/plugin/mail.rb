@@ -1,28 +1,25 @@
+require 'erb'
 require 'mail'
 
 module Pigeon
   module Plugin
     class Mail < Base
       def notify(args)
-        send_mail(args[:message])
-      end
-
-      protected
-
-      def send_mail(message='')
-        smtp_opts = @config['smtp'].keys.inject({}) do |opts, key|
-          opts[key.to_sym] = @config['smtp'][key]
-          opts
+        if smtp_opts = config.smtp
+          ::Mail.defaults do
+            delivery_method :smtp, smtp_opts
+          end
         end
 
-        ::Mail.defaults do
-          delivery_method :smtp, smtp_opts
+        to_addresses = config.message['to']
+        if to_addresses.is_a?(String)
+          to_addresses = [to_addresses]
         end
 
-        to_addresses = @config['message']['to'] || []
         mail = {
-          from:    @config['message']['from'],
-          subject: @config['message']['subject'],
+          from:    config.message['from'],
+          subject: render(config.message['subject_template'], args),
+          body:    render(config.message['body_template'], args),
         }
 
         to_addresses.each do |to_address|
@@ -30,9 +27,16 @@ module Pigeon
             from    mail[:from]
             to      to_address
             subject mail[:subject]
-            body    message
+            body    mail[:body]
           end
         end
+      end
+
+      protected
+
+      def render(template, args)
+        erb = ERB.new(template)
+        erb.result(binding)
       end
     end
   end

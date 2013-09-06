@@ -1,15 +1,11 @@
 module Pigeon
   module Plugin
     class Base
-      def initialize(observer, config)
-        observer.observe(self)
+      attr_reader :config
 
-        @observer = observer
-        @config   = config
+      def initialize(config)
+        @config = config
       end
-
-      def run;          end
-      def notify(args); end
     end
   end
 end
