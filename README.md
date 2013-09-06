@@ -1,13 +1,13 @@
-# Pigeon [![BuildStatus](https://secure.travis-ci.org/kentaro/pigeon.png)](http://travis-ci.org/kentaro/pigeon)
+# Hato [![BuildStatus](https://secure.travis-ci.org/kentaro/hato.png)](http://travis-ci.org/kentaro/hato)
 
-Pigeon is a tool to manage notification methods. Once you configure notification methods, you can send notifications via the methods just by posting message to this tool.
+Hato is a tool to manage notification methods. Once you configure notification methods, you can send notifications via the methods just by posting message to this tool.
 
 ## Usage
 
-Launch Pigeon with `pigeon` command:
+Launch Hato with `hato` command:
 
 ```
-$ pigeon -c config.rb
+$ hato -c config.rb
 ```
 
 Then, post your notification message:
@@ -18,12 +18,12 @@ $ curl -d 'message=test' -d 'tag=test' -d 'api_key=test' http://localhost:9699/n
 
 ## Configuration
 
-Pigeon provides DSLs for configuration.
+Hato provides DSLs for configuration.
 
 e.g. config.rb:
 
 ```
-Pigeon::Config.define do
+Hato::Config.define do
   config.api_key = 'test'
   config.host    = '0.0.0.0'
   config.port    = 9699
@@ -33,7 +33,7 @@ Pigeon::Config.define do
       config.scheme  = 'http'
       config.host    = 'irc.example.com'
       config.port    = 4979
-      config.channel = 'pigeon'
+      config.channel = 'hato'
     end
 
     plugin 'Mail' do
@@ -41,7 +41,7 @@ Pigeon::Config.define do
         address:   'smtp.example.com',
         port:      587,
         domain:    'example',
-        user_name: 'pigeon',
+        user_name: 'hato',
         password:  'password',
         enable_ssl: true,
       }
@@ -56,7 +56,7 @@ You've got a message:
 EOS
 
       config.message = {
-        from: 'pigeon@example.com',
+        from: 'hato@example.com',
         to:   [
           'foo@example.com',
           'bar@example.com',
@@ -71,31 +71,31 @@ end
 
 ## Plugin Architecture
 
-Pigeon bundles several plugins by default:
+Hato bundles several plugins by default:
 
-  * [Pigeon::Plugin::Ikachan](lib/pigeon/plugin/ikachan.rb)
-  * [Pigeon::Plugin::Mail](lib/pigeon/plugin/mail.rb)
+  * [Hato::Plugin::Ikachan](lib/hato/plugin/ikachan.rb)
+  * [Hato::Plugin::Mail](lib/hato/plugin/mail.rb)
 
-You can easily extend Pigeon by creating your own plugins. See the source for detail. It's really easy.
+You can easily extend Hato by creating your own plugins. See the source for detail. It's really easy.
 
-## Using Pigeon with Thrid-party Plugins
+## Using Hato with Thrid-party Plugins
 
 At first, create a `Gemfile` to manage dependencies:
 
 ```
 source 'https://rubygems.org'
 
-gem 'pigeon'
-gem 'pigeon/plugin/awesome_plugin'
+gem 'hato'
+gem 'hato/plugin/awesome_plugin'
 ```
 
-Then, execute `bundle exec pigeon -c your_config_file`
+Then, execute `bundle exec hato -c your_config_file`
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'pigeon'
+    gem 'hato'
 
 And then execute:
 
@@ -103,7 +103,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install pigeon
+    $ gem install hato
 
 ## Contributing
 

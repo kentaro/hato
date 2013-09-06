@@ -1,4 +1,4 @@
-module Pigeon
+module Hato
   module Plugin
     class Base
       attr_reader :config

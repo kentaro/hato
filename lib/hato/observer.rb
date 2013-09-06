@@ -1,6 +1,6 @@
-require 'pigeon/plugin'
+require 'hato/plugin'
 
-module Pigeon
+module Hato
   class Observer
     def initialize(config)
       @config = config
@@ -40,12 +40,12 @@ module Pigeon
     end
 
     def plugin_class_for(name)
-      Pigeon::Plugin.const_get(name.to_s)
+      Hato::Plugin.const_get(name.to_s)
     end
 
     def file_name_for(name)
       file_name = name.to_s.gsub(/[A-Z][a-z0-9_]+?/) { |s| "_#{s.downcase}" }
-      'pigeon/plugin/' + file_name.sub(/^_/, '')
+      'hato/plugin/' + file_name.sub(/^_/, '')
     end
   end
 end

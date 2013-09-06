@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
-require 'pigeon'
+require 'hato'
 
 opts = {}
 
@@ -9,4 +9,4 @@ parser = OptionParser.new
 parser.on('-c=VAL', '--config=VAL') { |v| opts[:config_file] = v }
 parser.parse!(ARGV)
 
-Pigeon.run(opts)
+Hato.run(opts)

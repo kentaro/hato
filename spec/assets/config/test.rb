@@ -1,4 +1,4 @@
-Pigeon::Config.define do
+Hato::Config.define do
   config.api_key = 'test'
   config.host    = '0.0.0.0'
   config.port    = 9699
@@ -8,7 +8,7 @@ Pigeon::Config.define do
       config.scheme  = 'http'
       config.host    = 'irc.example.com'
       config.port    = 4979
-      config.channel = 'pigeon'
+      config.channel = 'hato'
     end
 
     plugin 'Mail' do
@@ -16,7 +16,7 @@ Pigeon::Config.define do
         address:   'smtp.example.com',
         port:      587,
         domain:    'example',
-        user_name: 'pigeon',
+        user_name: 'hato',
         password:  'password',
         enable_ssl: true,
       }
@@ -31,7 +31,7 @@ You've got a message:
 EOS
 
       config.message = {
-        from: 'pigeon@example.com',
+        from: 'hato@example.com',
         to:   [
           'foo@example.com',
           'bar@example.com',

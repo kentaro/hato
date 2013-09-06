@@ -2,7 +2,7 @@ require 'json'
 require 'sinatra'
 require 'sinatra/logger'
 
-module Pigeon
+module Hato
   class Httpd
     def initialize(observer, config)
       @observer = observer

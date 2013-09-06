@@ -1,7 +1,7 @@
 require 'erb'
 require 'mail'
 
-module Pigeon
+module Hato
   module Plugin
     class Mail < Base
       def notify(args)

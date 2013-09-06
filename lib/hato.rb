@@ -1,9 +1,9 @@
-require 'pigeon/version'
-require 'pigeon/config'
-require 'pigeon/observer'
-require 'pigeon/httpd'
+require 'hato/version'
+require 'hato/config'
+require 'hato/observer'
+require 'hato/httpd'
 
-module Pigeon
+module Hato
   def self.run(opts = {})
     config   = Config.load(opts[:config_file])
     observer = Observer.new(config)

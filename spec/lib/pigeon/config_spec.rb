@@ -1,6 +1,6 @@
 require_relative '../../spec_helper'
 
-describe Pigeon::Config do
+describe Hato::Config do
   before { described_class.reset }
 
   describe '.load' do

@@ -1,7 +1,7 @@
 require 'uri'
 require 'net/http'
 
-module Pigeon
+module Hato
   module Plugin
     class Ikachan < Base
       def notify(args)

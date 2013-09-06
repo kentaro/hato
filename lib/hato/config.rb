@@ -1,7 +1,7 @@
 require 'yaml'
 require 'hashie'
 
-module Pigeon
+module Hato
   module Config
     module DSL
       attr_accessor :name
