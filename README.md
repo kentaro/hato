@@ -4,8 +4,16 @@ Pigeon is a tool to manage notification methods. Once you configure notification
 
 ## Usage
 
+Launch Pigeon with `pigeon` command:
+
 ```
 $ pigeon -c config.rb
+```
+
+Then, post your notification message:
+
+```
+$ curl -d 'message=test' -d 'tag=test' -d 'api_key=test' http://localhost:9699/notify
 ```
 
 ## Configuration
