@@ -37,7 +37,7 @@ describe Pigeon::Config do
         }
 
         it {
-          expect(described_class.api_key).to be == 'YOUR API KEY'
+          expect(described_class.api_key).to be == 'test'
 
           expect(described_class.tags).to be_an_instance_of Array
           expect(described_class.tags.size).to be == 1

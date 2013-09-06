@@ -1,5 +1,6 @@
 require 'json'
 require 'sinatra'
+require 'sinatra/logger'
 
 module Pigeon
   class Httpd
@@ -12,18 +13,16 @@ module Pigeon
       App.set(:observer, @observer)
       App.set(:api_key,  @config.api_key)
 
-      @server = Rack::Handler::WEBrick.run(
+      Rack::Handler::WEBrick.run(
         App.new,
-        Host: @config['host'] || '0.0.0.0',
-        Port: @config['port'] || 9699,
+        Host: @config.host || '0.0.0.0',
+        Port: @config.port || 9699,
       )
     end
 
-    def shutdown
-      @server.shutdown
-    end
-
     class App < Sinatra::Base
+      enable :logging
+
       before do
         if settings.api_key != params[:api_key]
           halt 403, JSON.dump(
@@ -37,6 +36,7 @@ module Pigeon
         settings.observer.update(
           tag:     params[:tag],
           message: params[:message],
+          logger:  logger,
         )
 
         JSON.dump(

@@ -7,7 +7,12 @@ module Pigeon
       def notify(args)
         if smtp_opts = config.smtp
           ::Mail.defaults do
-            delivery_method :smtp, smtp_opts
+            delivery_method :smtp, (
+              smtp_opts.to_hash.keys.inject({}) { |opts, key|
+                opts[key.to_sym] = smtp_opts.send(key.to_sym)
+                opts
+              }
+            )
           end
         end
 
@@ -36,7 +41,7 @@ module Pigeon
 
       def render(template, args)
         erb = ERB.new(template)
-        erb.result(binding)
+        erb.result(binding).chomp
       end
     end
   end

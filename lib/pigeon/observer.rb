@@ -1,3 +1,5 @@
+require 'pigeon/plugin'
+
 module Pigeon
   class Observer
     def initialize(config)
@@ -5,9 +7,17 @@ module Pigeon
     end
 
     def update(args)
+      logger  = args.delete(:logger)
       plugins = load_plugins_for(args[:tag])
+
       plugins.each do |plugin|
-        Thread.start(plugin) { plugin.notify(args) }
+        Thread.start(plugin) do |plugin|
+          begin
+            plugin.notify(args)
+          rescue => e
+            logger.error("#{e.message} from #{plugin.class}")
+          end
+        end
       end
     end
 
