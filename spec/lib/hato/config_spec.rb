@@ -46,9 +46,13 @@ describe Hato::Config do
           expect(tag.plugins).to be_an_instance_of Array
           expect(tag.plugins.size).to be == 2
 
-          plugin = tag.plugins.first
-          expect(plugin.name).to be == 'Ikachan'
-          expect(plugin.host).to be == 'irc.example.com'
+          ikachan = tag.plugins[0]
+          expect(ikachan.name).to be == 'Ikachan'
+          expect(ikachan.host).to be == 'irc.example.com'
+
+          mail = tag.plugins[1]
+          expect(mail.message).to be_an_instance_of Hashie::Mash
+          expect(mail.message['from']).to be == 'hato@example.com'
         }
       end
     end

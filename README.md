@@ -1,6 +1,6 @@
 # Hato [![BuildStatus](https://secure.travis-ci.org/kentaro/hato.png)](http://travis-ci.org/kentaro/hato)
 
-Hato is a tool to manage notification methods. Once you configure notification methods, you can send notifications via the methods just by posting message to this tool.
+Hato is a tool to manage various notification methods. Once you configure notification methods, you can send messages via the methods just by posting them to Hato.
 
 ## Usage
 
@@ -24,27 +24,25 @@ e.g. config.rb:
 
 ```
 Hato::Config.define do
-  config.api_key = 'test'
-  config.host    = '0.0.0.0'
-  config.port    = 9699
+  api_key 'test'
+  host    '0.0.0.0'
+  port    9699
 
   tag 'test' do
     plugin 'Ikachan' do
-      config.scheme  = 'http'
-      config.host    = 'irc.example.com'
-      config.port    = 4979
-      config.channel = 'hato'
+      scheme  'http'
+      host    'irc.example.com'
+      port    4979
+      channel 'hato'
     end
 
     plugin 'Mail' do
-      config.smtp = {
-        address:   'smtp.example.com',
-        port:      587,
-        domain:    'example',
-        user_name: 'hato',
-        password:  'password',
-        enable_ssl: true,
-      }
+      smtp address:   'smtp.example.com',
+           port:      587,
+           domain:    'example',
+           user_name: 'hato',
+           password:  'password',
+           enable_ssl: true
 
       subject_template = <<EOS
 [<%= args[:tag] %>] Notification
@@ -55,15 +53,13 @@ You've got a message:
 <%= args[:message] %>
 EOS
 
-      config.message = {
-        from: 'hato@example.com',
-        to:   [
-          'foo@example.com',
-          'bar@example.com',
-        ],
-        subject_template: subject_template,
-        body_template:    body_template,
-      }
+      message from: 'hato@example.com',
+              to:   [
+                'foo@example.com',
+                'bar@example.com',
+              ],
+              subject_template: subject_template,
+              body_template:    body_template
     end
   end
 end
@@ -86,7 +82,7 @@ At first, create a `Gemfile` to manage dependencies:
 source 'https://rubygems.org'
 
 gem 'hato'
-gem 'hato/plugin/awesome_plugin'
+gem 'hato-plugin-awesome_plugin'
 ```
 
 Then, execute `bundle exec hato -c your_config_file`
@@ -112,3 +108,4 @@ Or install it yourself as:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+

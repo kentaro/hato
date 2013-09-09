@@ -12,7 +12,11 @@ module Hato
       end
 
       def method_missing(method, *args)
-        config.send(method)
+        if args.empty?
+          config.send(method)
+        else
+          config[method] = args.first
+        end
       end
 
       private
