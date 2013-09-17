@@ -67,7 +67,7 @@ end
 
 ## Plugin Architecture
 
-There have alread been some plugins:
+There have already been some plugins:
 
   * [Hato::Plugin::Ikachan](https://github.com/kentaro/hato-plugin-ikachan)
   * [Hato::Plugin::Mail](https://github.com/kentaro/hato-plugin-mail)
