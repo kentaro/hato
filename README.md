@@ -67,10 +67,10 @@ end
 
 ## Plugin Architecture
 
-Hato bundles several plugins by default:
+There have alread been some plugins:
 
-  * [Hato::Plugin::Ikachan](lib/hato/plugin/ikachan.rb)
-  * [Hato::Plugin::Mail](lib/hato/plugin/mail.rb)
+  * [Hato::Plugin::Ikachan](https://github.com/kentaro/hato-plugin-ikachan)
+  * [Hato::Plugin::Mail](https://github.com/kentaro/hato-plugin-mail)
 
 You can easily extend Hato by creating your own plugins. See the source for detail. It's really easy.
 
@@ -82,7 +82,8 @@ At first, create a `Gemfile` to manage dependencies:
 source 'https://rubygems.org'
 
 gem 'hato'
-gem 'hato-plugin-awesome_plugin'
+gem 'hato-plugin-mail'
+gem 'hato-plugin-ikachan'
 ```
 
 Then, execute `bundle exec hato -c your_config_file`

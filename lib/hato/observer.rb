@@ -11,11 +11,11 @@ module Hato
       plugins = load_plugins_for(args[:tag])
 
       plugins.each do |plugin|
-        Thread.start(plugin) do |plugin|
+        Thread.start(plugin) do |t|
           begin
-            plugin.notify(args)
+            t.notify(args)
           rescue => e
-            logger.error("#{e.message} from #{plugin.class}")
+            logger.error("#{e.message} from #{t.class}")
           end
         end
       end
