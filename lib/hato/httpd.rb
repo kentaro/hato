@@ -23,13 +23,17 @@ module Hato
     class App < Sinatra::Base
       enable :logging
 
-      before do
-        if settings.api_key != params[:api_key]
+      before '/.+' do
+        if settings.api_key && (settings.api_key != params[:api_key])
           halt 403, JSON.dump(
             status:  :error,
             message: 'API key is wrong. Confirm your API key setting of server/client.',
           )
         end
+      end
+
+      get '/' do
+        'Hato https://github.com/kentaro/hato'
       end
 
       post "/notify" do
