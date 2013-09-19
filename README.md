@@ -71,6 +71,7 @@ There have already been some plugins:
 
   * [Hato::Plugin::Ikachan](https://github.com/kentaro/hato-plugin-ikachan)
   * [Hato::Plugin::Mail](https://github.com/kentaro/hato-plugin-mail)
+  * [Hato::Plugin::Hipchat](https://github.com/banyan/hato-plugin-hipchat)
 
 You can easily extend Hato by creating your own plugins. See the source for detail. It's really easy.
 
