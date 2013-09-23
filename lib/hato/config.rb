@@ -51,7 +51,14 @@ module Hato
     end
 
     def self.match(tag)
-      tags.select { |t| t.name == tag }
+      tags.inject([]) do |buf, t|
+        if t.name.kind_of?(String) && t.name == tag
+          buf << [t]
+        elsif t.name.kind_of?(Regexp) && (match = t.name.match(tag))
+          buf << [t, match[1..-1]]
+        end
+        buf
+      end
     end
 
     def self.reset
@@ -63,12 +70,27 @@ module Hato
     class Tag
       include DSL
 
+      def initialize(name, &block)
+        @name = name
+        @block = block
+      end
+
       def plugins
         @plugins ||= []
       end
 
       def plugin(name, &block)
         self.plugins << Plugin.new(name, &block)
+      end
+
+      def invoke!(args)
+        @plugins = []
+        if args && args.empty?
+          instance_eval(&@block)
+        else
+          instance_exec(*args, &@block)
+        end
+        self
       end
     end
 

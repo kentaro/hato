@@ -1,15 +1,14 @@
 ENV['RACK_ENV'] = 'test'
 
 require 'spec_helper'
-require 'hato'
 require 'rack/test'
 
-describe 'Hato::Httpd' do
+describe Hato::Httpd do
   include Rack::Test::Methods
 
   def app
     config = Hato::Config.load(
-      File.expand_path('../../assets/config/test.rb', __FILE__)
+      File.expand_path('../../../assets/config/test.rb', __FILE__)
     )
     observer = Hato::Observer.new(config)
     Hato::Httpd::App.set(:observer, observer)
@@ -32,7 +31,7 @@ describe 'Hato::Httpd' do
       expect(last_response.body).to eq('{"status":"success","message":"Successfully sent the message you notified to me."}')
     end
 
-    it 'fail' do
+    it 'error' do
       post '/notify', {message: 'test', tag: 'test', api_key: 'wrong_key'}
       expect(last_response).to be_forbidden
       expect(last_response.body).to eq('{"status":"error","message":"API key is wrong. Confirm your API key setting of server/client."}')
