@@ -23,7 +23,7 @@ module Hato
     class App < Sinatra::Base
       enable :logging
 
-      before '/.+' do
+      before /\/.+/ do
         if settings.api_key && (settings.api_key != params[:api_key])
           halt 403, JSON.dump(
             status:  :error,

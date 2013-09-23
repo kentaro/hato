@@ -17,9 +17,25 @@ describe 'Hato::Httpd' do
     Hato::Httpd::App.new
   end
 
-  it "index" do
-    get '/'
-    expect(last_response).to be_ok
-    expect(last_response.body).to eq('Hato https://github.com/kentaro/hato')
+  describe 'index' do
+    it do
+      get '/'
+      expect(last_response).to be_ok
+      expect(last_response.body).to eq('Hato https://github.com/kentaro/hato')
+    end
+  end
+
+  describe 'notify' do
+    it 'success' do
+      post '/notify', {message: 'test', tag: 'test', api_key: 'test'}
+      expect(last_response).to be_ok
+      expect(last_response.body).to eq('{"status":"success","message":"Successfully sent the message you notified to me."}')
+    end
+
+    it 'fail' do
+      post '/notify', {message: 'test', tag: 'test', api_key: 'wrong_key'}
+      expect(last_response).to be_forbidden
+      expect(last_response.body).to eq('{"status":"error","message":"API key is wrong. Confirm your API key setting of server/client."}')
+    end
   end
 end
