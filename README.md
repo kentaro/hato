@@ -38,7 +38,7 @@ Hato::Config.define do
   end
 
   # test by regexp matching
-  tag /([^\.])\.([^\.])/ do |matched1, matched2|
+  tag /^test2\.([^\.])\.([^\.])$/ do |matched1, matched2|
     plugin 'Plugin2' do
       key1 matched1
       key2 matched2
