@@ -43,7 +43,7 @@ describe Hato::Config do
           expect(described_class.tags.size).to be == 1
 
           tag = described_class.tags.first
-          tag.invoke!(nil)
+          tag.activate!(nil)
           expect(tag.plugins).to be_an_instance_of Array
           expect(tag.plugins.size).to be == 2
 

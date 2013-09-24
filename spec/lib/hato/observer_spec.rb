@@ -11,11 +11,11 @@ describe Hato::Observer do
         @observer = described_class.new(config)
       end
 
-      it 'receive `invoke!` with nil' do
+      it 'receive `activate!` with nil' do
         logger = double('logger')
         logger.stub(:error).and_return(nil)
 
-        Hato::Config::Tag.any_instance.should_receive(:invoke!).with(nil)
+        Hato::Config::Tag.any_instance.should_receive(:activate!).with(nil)
 
         @observer.update(
           tag:     'test',
@@ -34,11 +34,11 @@ describe Hato::Observer do
         @observer = described_class.new(config)
       end
 
-      it 'receive `invoke!` with matched values' do
+      it 'receive `activate!` with matched values' do
         logger = double('logger')
         logger.stub(:error).and_return(nil)
 
-        Hato::Config::Tag.any_instance.should_receive(:invoke!).with(['Yang', 'Reinhard'])
+        Hato::Config::Tag.any_instance.should_receive(:activate!).with(['Yang', 'Reinhard'])
 
         @observer.update(
           tag:     'Yang and Reinhard',

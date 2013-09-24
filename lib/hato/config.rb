@@ -83,7 +83,7 @@ module Hato
         self.plugins << Plugin.new(name, &block)
       end
 
-      def invoke!(args)
+      def activate!(args)
         @plugins = []
         if args && args.empty?
           instance_eval(&@block)

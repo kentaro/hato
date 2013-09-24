@@ -27,7 +27,7 @@ module Hato
       plugins = []
 
       @config.match(tag).each do |matched_tag, args|
-        matched_tag.invoke!(args)
+        matched_tag.activate!(args)
         matched_tag.plugins.each do |plugin|
           plugin_file_name = file_name_for(plugin.name)
           require plugin_file_name
