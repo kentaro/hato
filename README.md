@@ -28,38 +28,20 @@ Hato::Config.define do
   host    '0.0.0.0'
   port    9699
 
+  # test by exact string mathing
   tag 'test' do
-    plugin 'Ikachan' do
-      scheme  'http'
-      host    'irc.example.com'
-      port    4979
-      channel 'hato'
+    plugin 'Plugin1' do
+      key1 'value1'
+      key2 'value2'
+      key3 'value3'
     end
+  end
 
-    plugin 'Mail' do
-      smtp address:   'smtp.example.com',
-           port:      587,
-           domain:    'example',
-           user_name: 'hato',
-           password:  'password',
-           enable_ssl: true
-
-      subject_template = <<EOS
-[<%= args[:tag] %>] Notification
-EOS
-      body_template = <<EOS
-You've got a message:
-
-<%= args[:message] %>
-EOS
-
-      message from: 'hato@example.com',
-              to:   [
-                'foo@example.com',
-                'bar@example.com',
-              ],
-              subject_template: subject_template,
-              body_template:    body_template
+  # test by regexp matching
+  tag /([^\.])\.([^\.])/ do |matched1, matched2|
+    plugin 'Plugin2' do
+      key1 matched1
+      key2 matched2
     end
   end
 end
