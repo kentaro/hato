@@ -8,7 +8,7 @@ module Hato
 
       def initialize(name, &block)
         @name = name
-        instance_eval(&block)
+        @block = block
       end
 
       def method_missing(method, *args)
@@ -17,6 +17,15 @@ module Hato
         else
           config[method] = args.first
         end
+      end
+
+      def activate!(args = nil)
+        if !args || args.empty?
+          instance_eval(&@block)
+        else
+          instance_exec(*args, &@block)
+        end
+        self
       end
 
       private
@@ -75,22 +84,17 @@ module Hato
         @block = block
       end
 
+      def activate!(args = nil)
+        @plugins = []
+        super(args)
+      end
+
       def plugins
         @plugins ||= []
       end
 
       def plugin(name, &block)
-        self.plugins << Plugin.new(name, &block)
-      end
-
-      def activate!(args)
-        @plugins = []
-        if args && args.empty?
-          instance_eval(&@block)
-        else
-          instance_exec(*args, &@block)
-        end
-        self
+        self.plugins << Plugin.new(name, &block).activate!
       end
     end
 
