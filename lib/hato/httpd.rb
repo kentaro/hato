@@ -36,10 +36,44 @@ module Hato
         'Hato https://github.com/kentaro/hato'
       end
 
-      post "/notify" do
+      post '/notify' do
         settings.observer.update(
           tag:     params[:tag],
           message: params[:message],
+          logger:  logger,
+        )
+
+        JSON.dump(
+          status:  :success,
+          message: 'Successfully sent the message you notified to me.',
+        )
+      end
+
+      post '/webhook' do
+        payload = params[:payload]
+
+        if !payload
+          halt 400, JSON.dump(
+            status:  :error,
+            message: 'Missing mandatory parameter: `payload`',
+          )
+        end
+
+        owner      = payload['repository'] && payload['repository']['owner'] && payload['repository']['owner']['name']
+        repository = payload['repository'] && payload['repository']['name']
+
+        if owner && repository
+          tag = ['webhook', owner, repository].join('.')
+        else
+          halt 400, JSON.dump(
+            status:  :error,
+            message: 'Invalid JSON message: both `repository.owner.name` and `repository.name` are required',
+          )
+        end
+
+        settings.observer.update(
+          tag:     tag,
+          payload: payload,
           logger:  logger,
         )
 
