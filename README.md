@@ -10,11 +10,25 @@ Launch Hato with `hato` command:
 $ hato -c config.rb
 ```
 
-Then, post your notification message:
+### Notification
+
+Post your notification message:
 
 ```
 $ curl -d 'message=test' -d 'tag=test' -d 'api_key=test' http://localhost:9699/notify
 ```
+
+### WebHook
+
+Hato supports GitHub/GitHub Enterprise-formatted webhook.
+
+```
+$ curl -d 'payload={...}' -d 'api_key=test' http://localhost:9699/webhook
+```
+
+The tag is automatically built from payload. For example, the tag for this repository will be `webhook.kentaro.hato`.
+
+Consult [the documentation](https://help.github.com/articles/post-receive-hooks) for the details of webhook.
 
 ## Configuration
 
@@ -28,20 +42,28 @@ Hato::Config.define do
   host    '0.0.0.0'
   port    9699
 
-  # test by exact string mathing
+  # exact string mathing
   tag 'test' do
-    plugin 'Plugin1' do
+    plugin 'AwesomePlugin' do
       key1 'value1'
       key2 'value2'
       key3 'value3'
     end
   end
 
-  # test by regexp matching
+  # regexp matching
   tag /^test2\.([^\.]+)\.([^\.]+)$/ do |matched1, matched2|
-    plugin 'Plugin2' do
+    plugin 'AwesomePlugin' do
       key1 matched1
       key2 matched2
+    end
+  end
+
+  # webhook
+  tag /^webhook\.([^\.]+)\.([^\.]+)$/ do |owner, repository|
+    plugin 'AwesomePlugin' do
+      key1 owner
+      key2 repository
     end
   end
 end
