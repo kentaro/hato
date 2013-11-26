@@ -10,8 +10,9 @@ module Hato
     end
 
     def run
-      App.set(:observer, @observer)
-      App.set(:api_key,  @config.api_key)
+      App.set(:observer,     @observer)
+      App.set(:api_key,      @config.api_key)
+      App.set(:logger_level, @config.log_level)
 
       Rack::Handler::WEBrick.run(
         App.new,
@@ -59,6 +60,8 @@ module Hato
             status:  :error,
             message: 'Missing mandatory header: `X-Github-Event`',
           )
+          logger.info('Missing mandatory header: `X-Github-Event`')
+          logger.debug(request.env)
         end
 
         tag     = ['webhook', owner, repository].join('.')
@@ -69,6 +72,8 @@ module Hato
             status:  :error,
             message: 'Missing mandatory parameter: `payload`',
           )
+          logger.info('Missing mandatory parameter: `payload`')
+          logger.debug(params)
         end
 
         settings.observer.update(

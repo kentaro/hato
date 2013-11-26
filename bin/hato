@@ -6,7 +6,8 @@ require 'hato'
 opts = {}
 
 parser = OptionParser.new
-parser.on('-c=VAL', '--config=VAL') { |v| opts[:config_file] = v }
+parser.on('-c=VAL', '--config=VAL')    { |v| opts[:config_file] = v }
+parser.on('-l=VAL', '--log-level=VAL') { |v| opts[:log_level]   = v }
 parser.parse!(ARGV)
 
 Hato.run(opts)
