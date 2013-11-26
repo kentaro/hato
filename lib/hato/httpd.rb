@@ -60,8 +60,6 @@ module Hato
             status:  :error,
             message: 'Missing mandatory header: `X-Github-Event`',
           )
-          logger.info('Missing mandatory header: `X-Github-Event`')
-          logger.debug(request.env)
         end
 
         tag     = ['webhook', owner, repository].join('.')
@@ -72,8 +70,6 @@ module Hato
             status:  :error,
             message: 'Missing mandatory parameter: `payload`',
           )
-          logger.info('Missing mandatory parameter: `payload`')
-          logger.debug(params)
         end
 
         settings.observer.update(
@@ -81,7 +77,7 @@ module Hato
           event:      event,
           owner:      owner,
           repository: repository,
-          payload:    payload,
+          payload:    JSON.parse(payload),
           logger:     logger,
         )
 
