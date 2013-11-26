@@ -50,7 +50,9 @@ module Hato
       end
 
       post '/webhook/:owner/:repository' do
-        event = request.env['X-GitHub-Event']
+        event      = request.env['X-GitHub-Event']
+        owner      = params[:owner]
+        repository = params[:repository]
 
         if !event
           halt 400, JSON.dump(
@@ -59,7 +61,7 @@ module Hato
           )
         end
 
-        tag     = ['webhook', params[:owner], params[:repository]].join('.')
+        tag     = ['webhook', owner, repository].join('.')
         payload = params[:payload]
 
         if !payload
@@ -70,10 +72,12 @@ module Hato
         end
 
         settings.observer.update(
-          tag:     tag,
-          event:   event,
-          payload: payload,
-          logger:  logger,
+          tag:        tag,
+          event:      event,
+          owner:      owner,
+          repository: repository,
+          payload:    payload,
+          logger:     logger,
         )
 
         JSON.dump(
