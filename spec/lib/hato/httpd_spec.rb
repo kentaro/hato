@@ -62,18 +62,8 @@ describe Hato::Httpd do
 
   describe 'webhook' do
     context 'success' do
-      let(:payload) {
-        {
-          repository: {
-            name:  'hato',
-            owner: {
-              name: 'kentaro',
-            },
-          }
-        }
-      }
       it 'should be success with correct payload' do
-        post '/webhook', payload: payload, api_key: 'test'
+        post '/webhook/kentaro/hato', payload: {foo: 'bar'}, api_key: 'test'
         expect(last_response).to be_ok
         expect(last_response.body).to eq('{"status":"success","message":"Successfully sent the message you notified to me."}')
       end
@@ -81,21 +71,9 @@ describe Hato::Httpd do
 
     context 'error' do
       it 'should be error when payload is not passed' do
-        post '/webhook', api_key: 'test'
+        post '/webhook/kentaro/hato', api_key: 'test'
         expect(last_response).to be_bad_request
         expect(last_response.body).to eq('{"status":"error","message":"Missing mandatory parameter: `payload`"}')
-      end
-
-      it 'should be error when repository.name is not passed' do
-        post '/webhook', api_key: 'test', payload: {repository: {owner: {name: 'kentaro'}}}
-        expect(last_response).to be_bad_request
-        expect(last_response.body).to eq('{"status":"error","message":"Invalid JSON message: both `repository.owner.name` and `repository.name` are required"}')
-      end
-
-      it 'should be error when repository.owner.name is not passed' do
-        post '/webhook', api_key: 'test', payload: {repository: {name: 'hato'}}
-        expect(last_response).to be_bad_request
-        expect(last_response.body).to eq('{"status":"error","message":"Invalid JSON message: both `repository.owner.name` and `repository.name` are required"}')
       end
     end
   end

@@ -49,25 +49,14 @@ module Hato
         )
       end
 
-      post '/webhook' do
+      post '/webhook/:owner/:repository' do
+        tag     = ['webhook', params[:owner], params[:repository]].join('.')
         payload = params[:payload]
 
         if !payload
           halt 400, JSON.dump(
             status:  :error,
             message: 'Missing mandatory parameter: `payload`',
-          )
-        end
-
-        owner      = payload['repository'] && payload['repository']['owner'] && payload['repository']['owner']['name']
-        repository = payload['repository'] && payload['repository']['name']
-
-        if owner && repository
-          tag = ['webhook', owner, repository].join('.')
-        else
-          halt 400, JSON.dump(
-            status:  :error,
-            message: 'Invalid JSON message: both `repository.owner.name` and `repository.name` are required',
           )
         end
 
