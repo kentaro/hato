@@ -20,13 +20,13 @@ $ curl -d 'message=test' -d 'tag=test' -d 'api_key=test' http://localhost:9699/n
 
 ### WebHook
 
-Hato supports GitHub/GitHub Enterprise-formatted webhook.
+Hato supports GitHub/GitHub Enterprise-formatted webhook. Path is expected to be `/webhook/:owner/:repository` like below:
 
 ```
-$ curl -d 'payload={...}' -d 'api_key=test' http://localhost:9699/webhook
+$ curl -d 'payload={...}' -d 'api_key=test' http://localhost:9699/webhook/kentaro/hato
 ```
 
-The tag is automatically built from payload. For example, the tag for this repository will be `webhook.kentaro.hato`.
+Tag is automatically built from the path. For example, the tag for the path above will be `webhook.kentaro.hato`.
 
 Consult [the documentation](https://help.github.com/articles/post-receive-hooks) for the details of webhook.
 
