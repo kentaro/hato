@@ -63,15 +63,32 @@ describe Hato::Httpd do
   describe 'webhook' do
     context 'success' do
       it 'should be success with correct payload' do
-        post '/webhook/kentaro/hato', payload: {foo: 'bar'}, api_key: 'test'
+        post '/webhook/kentaro/hato', {
+          payload: {foo: 'bar'},
+          api_key: 'test',
+        }, {
+          'X-GitHub-Event' => 'test',
+        }
         expect(last_response).to be_ok
         expect(last_response.body).to eq('{"status":"success","message":"Successfully sent the message you notified to me."}')
       end
     end
 
     context 'error' do
+      it 'should be error when event header is not sent' do
+        post '/webhook/kentaro/hato', {
+          api_key: 'test',
+        }
+        expect(last_response).to be_bad_request
+        expect(last_response.body).to eq('{"status":"error","message":"Missing mandatory header: `X-GitHub-Event`"}')
+      end
+
       it 'should be error when payload is not passed' do
-        post '/webhook/kentaro/hato', api_key: 'test'
+        post '/webhook/kentaro/hato', {
+          api_key: 'test',
+        }, {
+          'X-GitHub-Event' => 'test',
+        }
         expect(last_response).to be_bad_request
         expect(last_response.body).to eq('{"status":"error","message":"Missing mandatory parameter: `payload`"}')
       end

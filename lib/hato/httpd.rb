@@ -50,6 +50,15 @@ module Hato
       end
 
       post '/webhook/:owner/:repository' do
+        event = request.env['X-GitHub-Event']
+
+        if !event
+          halt 400, JSON.dump(
+            status:  :error,
+            message: 'Missing mandatory header: `X-GitHub-Event`',
+          )
+        end
+
         tag     = ['webhook', params[:owner], params[:repository]].join('.')
         payload = params[:payload]
 
@@ -62,6 +71,7 @@ module Hato
 
         settings.observer.update(
           tag:     tag,
+          event:   event,
           payload: payload,
           logger:  logger,
         )
