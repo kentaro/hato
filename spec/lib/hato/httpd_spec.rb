@@ -67,7 +67,7 @@ describe Hato::Httpd do
           payload: {foo: 'bar'},
           api_key: 'test',
         }, {
-          'X-Github-Event' => 'test',
+          'HTTP_X_GITHUB_EVENT' => 'test',
         }
         expect(last_response).to be_ok
         expect(last_response.body).to eq('{"status":"success","message":"Successfully sent the message you notified to me."}')
@@ -87,7 +87,7 @@ describe Hato::Httpd do
         post '/webhook/kentaro/hato', {
           api_key: 'test',
         }, {
-          'X-Github-Event' => 'test',
+          'HTTP_X_GITHUB_EVENT' => 'test',
         }
         expect(last_response).to be_bad_request
         expect(last_response.body).to eq('{"status":"error","message":"Missing mandatory parameter: `payload`"}')

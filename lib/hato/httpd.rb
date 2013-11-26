@@ -51,7 +51,7 @@ module Hato
       end
 
       post '/webhook/:owner/:repository' do
-        event      = request.env['X-Github-Event']
+        event      = request.env['HTTP_X_GITHUB_EVENT']
         owner      = params[:owner]
         repository = params[:repository]
 
